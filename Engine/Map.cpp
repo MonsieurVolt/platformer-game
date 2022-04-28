@@ -14,7 +14,7 @@ Map::Map(std::string surfName, std::string modelName, RectI& frames) : Grid(surf
     }
     tiles.push_back(new Tile(Surface{ 64,64 }, frames, frames, false));
     for (std::string line; std::getline(file, line);) {
-        OutputDebugStringA(line.c_str());
+  
         if (line == "[width]") {
             file >> width;
 
@@ -59,7 +59,9 @@ Map::Map(std::string surfName, std::string modelName, RectI& frames) : Grid(surf
 void Grid::DrawTiles(Graphics& gfx, int X)
 {
     int nbTilePass = (X - (X % tileWidth)) / tileWidth;
-
+    if (X > 10*64) {
+        nbTilePass = 10;
+    }
 
     int posFirst = nbTilePass * tileWidth - X;
     for (int i = 0; i < 10; i++) {
@@ -88,4 +90,48 @@ Grid::Grid(std::string surfName):width(0),height(0)
      tiles = std::move(other.tiles);
      map = std::move(other.map);
      return *this;
+ }
+
+ Background::Background(std::string surfName, std::string modelName, RectI& frames): Grid(surfName)
+ {
+     std::fstream file(modelName);
+     assert(file);
+     RectI frame = frames;
+     tiles.push_back(new Tile(*surface, frames, frames, true));
+     tiles.push_back(new Tile(Surface{ 64,64 }, frames, frames, false));
+
+     for (std::string line; std::getline(file, line);) {
+
+         if (line == "[width]") {
+             file >> width;
+
+         }
+         else if (line == "[height]") {
+             file >> height;
+
+         }
+         else if (line == "[TileWidth]") {
+             file >> tileWidth;
+         }
+         else if (line[0] == '/') {
+
+             line.resize(width + 1);
+
+             for (int j = 1; j < width + 1; j++) {
+                 switch (line[j])
+                 {
+                 case '#':
+                     map.push_back(tiles[(int)TypeTiles::Cloud]);
+                     break;
+             
+                     break;
+                 default:
+
+                     map.push_back(tiles[(int)TypeTiles::Sky]);
+                     break;
+                 }
+             }
+
+         }
+     }
  }

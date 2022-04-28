@@ -26,7 +26,8 @@ Game::Game(MainWindow& wnd)
     :
     wnd(wnd),
     gfx(wnd),
-    m("blocks24.bmp", "map.txt", RectI{0,64,0,64})
+    map("blocks24.bmp", "map.txt", RectI{0,64,0,64}),
+    background("cloud (1).bmp","background.txt", RectI{0,64,0,64})
 
 {
 
@@ -48,5 +49,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-    m.DrawTiles(gfx, i);
+    background.DrawTiles(gfx, i);
+    map.DrawTiles(gfx, i*2);
 }

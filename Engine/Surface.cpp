@@ -25,6 +25,17 @@ Surface::Surface(int width, int height) :
     pixels.resize(width * height);
 }
 
+Surface::Surface(int width, int height, Color c):width(width),height(height)
+{
+    pixels.resize(width * height);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            PutPixel(i, j, c);
+        }
+        
+    }
+}
+
 Surface::Surface(const std::string& filename)
 {
     OutputDebugString(L"Construct surface");

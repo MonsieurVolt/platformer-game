@@ -43,3 +43,12 @@ public:
 
 };
 
+class Background : public Grid {
+public:
+    enum class TypeTiles {
+        Cloud,
+        Sky,
+        End
+    };
+    Background(std::string surfName, std::string modelName, RectI& frames);
+};

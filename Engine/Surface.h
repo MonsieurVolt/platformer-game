@@ -13,6 +13,7 @@ public:
     Surface& operator=(const Surface& s) = default;
     Surface& operator=(Surface&& rhs);
     Surface(int width, int height);
+    Surface(int width, int height, Color c);
     Surface(const std::string& filename);
     ~Surface() = default;
     void PutPixel(int x, int y, Color c);

@@ -47,7 +47,8 @@ private:
     /********************************/
     /*  User Variables              */
     
-    Map m;
+    Map map;
+    Background background;
     int i = 0;
     /********************************/
 };

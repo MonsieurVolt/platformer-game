@@ -27,6 +27,7 @@ Surface::Surface(int width, int height) :
 
 Surface::Surface(const std::string& filename)
 {
+    OutputDebugString(L"Construct surface");
     std::ifstream file(filename, std::ios::binary);
     assert(file);
     BITMAPFILEHEADER bmpFileHeader;

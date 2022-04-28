@@ -6,13 +6,14 @@
 class Tile
 {
 public:
-    Tile() = default;
-    Tile(const Surface& s, RectI frame, RectI dim, bool solid);
-    Tile(const Tile&) = default;
 
-    Tile& operator=(const Tile& other) = default;
-    Tile& operator=(const Tile&& other);
-    virtual ~Tile() = default;
+    Tile(const Surface& s, RectI frame, RectI dim, bool solid);
+
+
+ 
+    virtual ~Tile() {
+        OutputDebugString(L"dete");
+    }
     virtual void DrawTile(VecI2& pos, Graphics& gfx);
 protected:
     RectI dim;

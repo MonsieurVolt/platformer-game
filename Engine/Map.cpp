@@ -1,14 +1,14 @@
 #include "Map.h"
 
 
-Map::Map(const  Surface& s, std::string filename, RectI& frames) :surface(s)
+Map::Map(std::string surfName, std::string modelName, RectI& frames) : Grid(surfName)
 {
-    std::fstream file(filename);
+    std::fstream file(modelName);
     assert(file);
     RectI frame = frames;
     for (int i = 0; i < (int)TypeTiles::Air; i++) {
 
-        tiles.push_back(new Tile(surface, frame, frames, true));
+        tiles.push_back(new Tile(*surface, frame, frames, true));
         frame.left = frame.right;
         frame.right += frames.right;
     }
@@ -53,11 +53,14 @@ Map::Map(const  Surface& s, std::string filename, RectI& frames) :surface(s)
         }
     }
 }
-void Map::DrawTiles(Graphics& gfx, int X)
+ Grid::Grid(const Grid&& other) noexcept {
+    *this = other;
+}
+void Grid::DrawTiles(Graphics& gfx, int X)
 {
     int nbTilePass = (X - (X % tileWidth)) / tileWidth;
 
-    OutputDebugStringA(std::to_string(nbTilePass).c_str());
+
     int posFirst = nbTilePass * tileWidth - X;
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 18; j++)
@@ -66,4 +69,23 @@ void Map::DrawTiles(Graphics& gfx, int X)
     }
 }
 
+Grid::Grid(std::string surfName):width(0),height(0)
+    
+{
+    surface = new Surface(surfName);
+}
 
+ Grid::~Grid() {
+    tiles.clear();
+    map.clear();
+}
+
+ Grid& Grid::operator=(const Grid&& other) noexcept
+ {
+     width = other.width;
+     height = other.height;
+     tileWidth = other.tileWidth;
+     tiles = std::move(other.tiles);
+     map = std::move(other.map);
+     return *this;
+ }

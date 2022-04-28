@@ -26,7 +26,7 @@ Game::Game(MainWindow& wnd)
     :
     wnd(wnd),
     gfx(wnd),
-    m(s, "map.txt", RectI{ 0,64,0,64 })
+    m("blocks24.bmp", "map.txt", RectI{0,64,0,64})
 
 {
 
@@ -43,6 +43,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
     i += 1;
+
 }
 
 void Game::ComposeFrame()

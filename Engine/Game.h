@@ -46,9 +46,7 @@ private:
 
     /********************************/
     /*  User Variables              */
-    Surface s = Surface("blocks24.bmp");
-    Tile t = Tile(s, RectI{ VecI2{0,0},64,64 }, RectI{ VecI2{0,0},64,64 }, true
-    );
+    
     Map m;
     int i = 0;
     /********************************/

@@ -3,12 +3,13 @@
 #include <vector>
 #include "Colors.h"
 #include "Rect.h"
+
 class Surface
 {
 public:
     Surface() = default;
     Surface(const Surface&) = default;
-    Surface(Surface&& donor);
+     Surface(Surface&& donor);
     Surface& operator=(const Surface& s) = default;
     Surface& operator=(Surface&& rhs);
     Surface(int width, int height);

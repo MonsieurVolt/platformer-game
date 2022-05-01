@@ -5,11 +5,13 @@
 
 Surface::Surface(Surface&& s)
 {
+    OutputDebugString(L"Create instance");
     *this = std::move(s);
 }
 
 Surface& Surface::operator=(Surface&& s)
 {
+    OutputDebugString(L"Create instance");
     width = s.width;
     height = s.height;
     pixels = std::move(s.pixels);
@@ -22,11 +24,13 @@ Surface::Surface(int width, int height) :
     width(width),
     height(height)
 {
+    OutputDebugString(L"Create instance");
     pixels.resize(width * height);
 }
 
 Surface::Surface(int width, int height, Color c):width(width),height(height)
 {
+    OutputDebugString(L"Create instance");
     pixels.resize(width * height);
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {

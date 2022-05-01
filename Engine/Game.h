@@ -26,6 +26,8 @@
 #include "Surface.h"
 #include "Tile.h"
 #include "Map.h"
+#include "FrameTimer.h"
+#include "Character.h"
 
 class Game
 {
@@ -36,7 +38,7 @@ public:
     void Go();
 private:
     void ComposeFrame();
-    void UpdateModel();
+    void UpdateModel(float dt);
     /********************************/
     /*  User Functions              */
     /********************************/
@@ -46,9 +48,11 @@ private:
 
     /********************************/
     /*  User Variables              */
-    
+    FrameTimer ft;
     Map map;
+    Character mario;
     Background background;
     int i = 0;
+    float speed = 200.0f;
     /********************************/
 };

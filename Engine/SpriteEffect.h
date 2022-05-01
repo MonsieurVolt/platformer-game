@@ -8,9 +8,6 @@ public:
         if (p != chroma) {
             g.PutPixel(x, y, p);
         }
-        else {
-            g.PutPixel(x, y, Colors::Blue);
-        }
     }
 private:
     Color chroma;

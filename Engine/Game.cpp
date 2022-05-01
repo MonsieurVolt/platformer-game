@@ -26,8 +26,9 @@ Game::Game(MainWindow& wnd)
     :
     wnd(wnd),
     gfx(wnd),
-    map("blocks24.bmp", "map.txt", RectI{0,64,0,64}),
-    background("cloud (1).bmp","background.txt", RectI{0,64,0,64})
+    map("blocks24.bmp", "map.txt", RectI{ 0,64,0,64 }),
+    background("cloud (1).bmp", "background.txt", RectI{ 0,64,0,64 }),
+    mario( VecF2(200.0f, 100.0f) )
 
 {
 
@@ -36,19 +37,53 @@ Game::Game(MainWindow& wnd)
 void Game::Go()
 {
     gfx.BeginFrame();
-    UpdateModel();
+    float elapsedTime = ft.Mark();
+    while (elapsedTime > 0.0f) {
+        const float dt = std::min(0.05f, elapsedTime);
+        UpdateModel(dt);
+        elapsedTime -= dt;
+    }
+
     ComposeFrame();
     gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(float dt)
 {
-    i += 1;
+    
+    VecF2 dir = { 0.0f,3.0f };
+    if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
+        dir.x += 1.0f;
+    }
+    if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
+        dir.x -= 1.0f;
+
+    }
+
+    if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
+        if (!mario.IsJumping())
+        mario.SetJump(true);
+
+    }
+    if (mario.IsJumping()) {
+        dir.y = -(0.3 - mario.GetTimeJump()) * 10.0f;
+    }
+
+
+    dir = mario.GetNextPos(dir, dt) - mario.GetPos();
+    RectF persoPos = RectF(mario.GetPos(), 64, 64);
+    map.HandleCharacter(persoPos, dir, i,mario);
+    mario.SetDirection(dir,i);
+    mario.Update(dir,dt);i += dt*speed;
+
 
 }
 
 void Game::ComposeFrame()
 {
+
     background.DrawTiles(gfx, i);
-    map.DrawTiles(gfx, i*2);
+    map.DrawTiles(gfx, i);
+    map.DrawTiles(gfx, i);
+    mario.Draw(gfx);
 }

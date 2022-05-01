@@ -8,9 +8,9 @@ class Surface
 {
 public:
     Surface() = default;
-    Surface(const Surface&) = default;
+    Surface(const Surface&) = delete;
      Surface(Surface&& donor);
-    Surface& operator=(const Surface& s) = default;
+    Surface& operator=(const Surface& s) = delete;
     Surface& operator=(Surface&& rhs);
     Surface(int width, int height);
     Surface(int width, int height, Color c);

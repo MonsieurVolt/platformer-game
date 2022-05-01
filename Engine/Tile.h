@@ -7,19 +7,29 @@ class Tile
 {
 public:
 
-    Tile(const Surface& s, RectI frame, RectI dim, bool solid);
+    Tile( RectI *frame, bool solid);
+    Tile() = default;
 
 
  
     virtual ~Tile() {
         OutputDebugString(L"dete");
     }
-    virtual void DrawTile(VecI2& pos, Graphics& gfx);
+
+    RectI& getFrame()const {
+        return *frame;
+    }
+    bool IsSolid() const {
+        return isSolid;
+
+    }
+    bool IsEmpty() const {
+        return isEmpty;
+    }
 protected:
-    RectI dim;
-    RectI frame;
-    const Surface& s;
-    bool isSolid;
+    RectI* frame = nullptr;
+    bool isSolid = false;
+    bool isEmpty = true;
 
 };
 

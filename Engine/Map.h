@@ -4,6 +4,7 @@
 #include <vector>
 #include "Tile.h"
 #include "Graphics.h"
+#include "Character.h"
 class Grid {
 public:
     Grid() = default;
@@ -36,7 +37,8 @@ public:
         End
     };
     Map(std::string surfName, std::string modelName, RectI& frames);
-
+    void DrawTiles(Graphics& gfx, int X);
+    void HandleCharacter(RectF& persoPos,VecF2& dir,int X,Character& mario);
 
 
 

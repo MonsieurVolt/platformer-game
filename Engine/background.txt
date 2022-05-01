@@ -1,5 +1,5 @@
 [width]
-30
+300
 [height]
 10
 [TileWidth]

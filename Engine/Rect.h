@@ -5,8 +5,9 @@ class Rect
 {
 public:
     Rect(T _t, T _b, T _l, T _r) : top(_t), bottom(_b), right(_r), left(_l) {};
-    Rect(Vec2<T>& topLeft, T width, T height) : top(topLeft.x), left(topLeft.y), bottom(topLeft.x + height), right(topLeft.y + width) {};
+    Rect(Vec2<T>& topLeft, T width, T height) : top(topLeft.y), left(topLeft.x), bottom(topLeft.y + height), right(topLeft.x + width) {};
     Rect(Vec2<T>& topLeft, Vec2<T>& bottomRight) : top(topLeft.y), bottom(bottom.y), left(topLeft.x), right(bottomRight.x) {};
+
     bool IsOverlappingWith(const Rect& other) const {
         return right > other.left && left<other.right&& bottom>other.top && top < other.bottom;
     }
@@ -33,6 +34,9 @@ public:
     Vec2<T> GetCenter() const
     {
         return Vec2<T>((left + right) / (T)2, (top + bottom) / (T)2);
+    }
+    Rect<T>& operator+(const VecF2& vec) {
+        return Rect<T>(top + vec.y, bottom + vec.y, left + vec.x, right + vec.x);
     }
 public:
     T top;

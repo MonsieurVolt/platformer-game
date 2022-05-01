@@ -57,21 +57,23 @@ public:
         PutPixel(x, y, { unsigned char(r),unsigned char(g),unsigned char(b) });
     }
     void PutPixel(int x, int y, Color c);
-    template<typename E>
-    void DrawSprite(int x, int y, const Surface& s, E effect)
+
+    void DrawSprite(int x, int y, const Surface& s)
     {
-        DrawSprite(x, y, s.GetRect(), s, effect);
+        DrawSprite(x, y, s.GetRect(), s);
     }
-    template<typename E>
-    void DrawSprite(int x, int y, const RectI& srcRect, const Surface& s, E effect)
+
+    void DrawSprite(int x, int y, const RectI& srcRect, const Surface& s)
     {
-        DrawSprite(x, y, srcRect, GetScreenRect(), s, effect);
+        DrawSprite(x, y, srcRect, GetScreenRect(), s);
     }
     RectI GetScreenRect() const {
         return RectI{ 0,ScreenHeight,0,ScreenWidth };
     }
-    template<typename E>
-    void DrawSprite(int x, int y, RectI srcRect, const RectI& clip, const Surface& s, E effect)
+    void DrawTile(int x, int y, const RectI& frame, const Surface& s) {
+        DrawSprite(x, y, frame, GetScreenRect(), s);
+    }
+    void DrawSprite(int x, int y, RectI srcRect, const RectI& clip, const Surface& s)
     {
         assert(srcRect.left >= 0);
         assert(srcRect.right <= s.GetWidth());
@@ -93,7 +95,11 @@ public:
         }
         for (int sy = srcRect.top; sy < srcRect.bottom; sy++) {
             for (int sx = srcRect.left; sx < srcRect.right; sx++) {
-                effect(s.GetPixel(sx, sy), x + sx - srcRect.left, y + sy - srcRect.top, *this);
+                auto p = s.GetPixel(sx, sy);
+                if (p != Colors::Magenta) {
+                    PutPixel(x + sx - srcRect.left, y + sy - srcRect.top, p);
+                };
+
             }
         }
     }

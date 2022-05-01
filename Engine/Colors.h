@@ -99,6 +99,9 @@ public:
     {
         dword = (dword & 0xFFFFFF00u) | b;
     }
+    unsigned int getDword() const {
+        return dword;
+    }
 };
 
 namespace Colors
